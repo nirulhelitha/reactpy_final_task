@@ -1,37 +1,39 @@
 from fastapi import FastAPI
 from reactpy.backend.fastapi import configure
-from reactpy import component,event, html, use_state
+from reactpy import component, event, html, use_state
 import reactpy as rp
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 
+
 @component
 def MyCrud():
-    ##Create state
-    alltodo + use_state("")
-    name,set_name= use_state("")
-    password,set_password=use_state(0)
+    ## Creating state
+    alltodo = use_state([])
+    name, set_name = use_state("")
+    password, set_password = use_state(0)
 
     def mysubmit(event):
-        newtodo = {"name":name,"password":password}
+        newtodo = {"name": name, "password": password}
 
-        #push this to alltodo
-        alltodo.set_value(alltodo.value+[newtodo])
-        login(newtodo)#function call to login function using the submitted data
-    
-    #looping data from alltodo to show on web
+        # push this to alltodo
+        alltodo.set_value(alltodo.value + [newtodo])
+        login(newtodo)  # function call to login function using the submitted data
+
+    # looping data from alltodo to show on web
 
     list = [
-       html.li(
-        {
-
-        },
-        f"{b}=>{i['name']};{i['password']}",
-       )
-       for b, i in enumerate(alltodo.alltodo.value)
+        html.li(
+            {
+              
+            },
+            f"{b} => {i['name']} ; {i['password']} ",
+        )
+        for b, i in enumerate(alltodo.value)
     ]
-    def handle_event(event)
-       print(event)
+
+    def handle_event(event):
+        print(event)
 
     return html.div(
         {"style": {"padding": "10px"}},
@@ -69,3 +71,19 @@ def MyCrud():
 
 
 app = FastAPI()
+from pymongo import MongoClient
+#copy and paste the mongodb uri
+uri= "mongodb+srv://ReactPy_Task01:task01@cluster0.hrvgipu.mongodb.net/"
+# camel case
+client= MongoClient(uri) 
+# define the db name
+db = client["ReactPy_Task01"]
+Collection = db["Task01"]
+
+#checking the connection
+try: 
+    client.admin.command("Ping")
+    print("Successfully Connected Mongodb")
+
+except Exception as e:
+       print(e)
