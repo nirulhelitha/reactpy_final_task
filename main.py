@@ -100,7 +100,7 @@ def login(
     print(document)
 
     # Insert the document into the collection
-    post_id = collection.insert_one(document).inserted_id  # insert document
+    post_id = Collection.insert_one(document).inserted_id  # insert document
     print(post_id)
 
     return {"message": "Login successful"}
